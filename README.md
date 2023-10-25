@@ -1,1 +1,1 @@
-# CI-CD-GCP
+# Infrastructure-Automation-GCP
