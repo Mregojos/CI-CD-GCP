@@ -1,1 +1,2 @@
-# Continuous Integration and Continuous Delivery (GCP) 
+# Continuous Integration and Continuous Delivery (CI/CD) on GCP
+
