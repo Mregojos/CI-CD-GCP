@@ -10,7 +10,7 @@
 ---
 ### Resources
 * GitHub Repository: https://github.com/mregojos/CI-CD-GCP
-* GitHub Tech Stack for Cloud, DevOps, SRE: https://github.com/mregojos/tech-stack
+* GitHub Repository Tech Stack for Cloud, DevOps, SRE: https://github.com/mregojos/tech-stack
 * Google Cloud Documentation: https://cloud.google.com/docs
 * Google Cloud Architecture: https://cloud.google.com/architecture
 * Google Cloud Architecture Framework: https://cloud.google.com/architecture/framework
