@@ -1,6 +1,7 @@
 # Continuous Integration and Continuous Delivery (CI/CD) on GCP (Project)
     > DevOps: Plan -> Code -> Build -> Test -> Release -> Deploy -> Operate -> Monitor
-
+    
+    Project: (# TO DO)
     | Code Source / Source Control Management : GCP Cloud Repositories / GitHub
     | Build and Test: Cloud Build
     | Release: GCP Artifact Registry / GCP Cloud Repositories / GitHub
