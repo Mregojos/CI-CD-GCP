@@ -1,7 +1,7 @@
 # Continuous Integration and Continuous Delivery (CI/CD) on GCP (Project)
 
 ### Architecture Diagram
-![images](./images/CI-CD-GCP.drawio.png)
+![images](./images/CI-CD-GCP-.drawio.png)
 
     > DevOps: Plan -> Code -> Build -> Test -> Release -> Deploy -> Operate -> Monitor
     
