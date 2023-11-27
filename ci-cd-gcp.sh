@@ -64,5 +64,7 @@ gcloud builds triggers create cloud-source-repositories --name=$TRIGGER_NAME \
     --service-account="$SA@$SA.iam.gserviceaccount.com" \
     --branch-pattern=".*" \
     --repo="$REPO" \
-    --build-config="cloudbuild.yaml"
+    --build-config="cloudbuild.yaml" \
+    --region="$REGION"
+
 
