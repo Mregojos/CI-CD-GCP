@@ -41,11 +41,6 @@ steps:
       gcloud builds submit \
       --region=$CLOUD_BUILD_REGION \
       --tag $REGION_B-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION
-    
-images:
-- '$REGION_B-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION'
-
-steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   script: |
     gcloud run deploy $APP_NAME \
@@ -124,8 +119,8 @@ gcloud iam service-accounts add-iam-policy-binding \
     --role=roles/iam.serviceAccountUser
     
 
-# Build Template 1
-cat > cloudbuild.yaml <<EOF
+# Build Template A
+cat > cloudbuild_A.yaml <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   script: |
@@ -133,7 +128,6 @@ steps:
   automapSubstitutions: true
 images:
 - 'us-central1-docker.pkg.dev/mattgcpprojects/ci-cd-gcp-i-artifact-registry/ci-cd-gcp-i:latest'
-steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   script: |
     gcloud run deploy $APP_NAME \
@@ -145,18 +139,14 @@ steps:
     --service-account=$APP_SERVICE_ACCOUNT_NAME@$(gcloud config get project).iam.gserviceaccount.com 
 EOF
 
-cat > cloudbuild.yaml <<EOF
+# Build Template B
+cat > cloudbuild_B.yaml <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   script: |
       gcloud builds submit \
       --region=$CLOUD_BUILD_REGION \
       --tag $REGION_B-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION
-    
-images:
-- '$REGION_B-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION'
-
-steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   script: |
     gcloud run deploy $APP_NAME \
