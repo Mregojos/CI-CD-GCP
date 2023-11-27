@@ -63,10 +63,9 @@ git push
 # Create a Cloud Build Trigger
 # gcloud builds triggers create cloud-source-repositories --help
 gcloud builds triggers create cloud-source-repositories \
-    --name="ci-cd-gcp-trigger" \ 
+    --service-account=projects/$SA/serviceAccounts/$SA@$SA.iam.gserviceaccount.com \
     --repo="ci-cd-gcp-repo" \
-    --branch-pattern=".*" \
-    --build-config="cloudbuild.yaml" 
-
-    # --service-account="$SA@$SA.iam.gserviceaccount.com" \
-    #  --region="$REGION"
+    --branch-pattern="^master$" \
+    --build-config="cloudbuild.yaml" \
+    --region="$REGION" \
+    --name="ci-cd-gcp-trigger"
