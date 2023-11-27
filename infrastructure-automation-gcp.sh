@@ -10,7 +10,7 @@ cd app
 
 #---------Application Name Environment Variables----------#
 VERSION="i"
-APP_NAME="infra-auto-$VERSION"
+APP_NAME="ci-cd-$VERSION"
 
 #---------Project Environment Variables---------#
 PROJECT_NAME="$(gcloud config get project)"
