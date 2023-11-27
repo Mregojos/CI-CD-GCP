@@ -45,7 +45,7 @@ SPECIAL_NAME=$APP_NAME
 
 #----------Deployment Environment Variables----------#
 CLOUD_BUILD_REGION="us-west2"
-REGION="us-west1"
+REGION="us-west1" 
 APP_ARTIFACT_NAME="$APP_NAME-artifact-registry"
 APP_VERSION="latest"
 APP_SERVICE_ACCOUNT_NAME="$APP_NAME-app-sa"
@@ -63,6 +63,7 @@ echo "\n #----------Exporting Environment Variables is done.----------# \n"
 SA=$(gcloud config get project)
 TRIGGER_NAME="ci-cd-gcp-trigger"
 REPO="ci-cd-gcp-repo"
+TRIGGER_REGION="us-central1"
 
 # Create a Google Cloud Source Repository
 gcloud source repos create $REPO
@@ -83,7 +84,7 @@ gcloud builds triggers create cloud-source-repositories \
     --repo="$REPO" \
     --branch-pattern="^master$" \
     --build-config="cloudbuild.yaml" \
-    --region="$REGION" \
+    --region="$TRIGGER_REGION" \
     --name="$TRIGGER_NAME"
     # --service-account=projects/$SA/serviceAccounts/$SA@$SA.iam.gserviceaccount.com 
 

@@ -126,7 +126,13 @@ gcloud compute networks subnets delete $SUBNET_NAME-$NOTEBOOK_REGION --region=$N
 gcloud compute networks delete $VPC_NAME --quiet
 
 # CI/CD GCP Cleanup
-gcloud builds triggers delete $TRIGGER_NAME --region=$REGION
+#----------Source Repository and Trigger Environment Variables----------#
+SA=$(gcloud config get project)
+TRIGGER_NAME="ci-cd-gcp-trigger"
+REPO="ci-cd-gcp-repo"
+TRIGGER_REGION="us-central1"
+
+gcloud builds triggers delete $TRIGGER_NAME --region=$TRIGGER_REGION
 gcloud source repos delete $REPO --quiet
 rm -rf ci-cd-gcp-repo
 
