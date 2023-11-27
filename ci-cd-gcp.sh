@@ -40,13 +40,13 @@ steps:
   script: |
       gcloud builds submit \
       --region=$CLOUD_BUILD_REGION \
-      --tag $REGION_B-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION
+      --tag $REGION-docker.pkg.dev/$(gcloud config get-value project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION
 - name: 'gcr.io/cloud-builders/gcloud'
   script: |
     gcloud run deploy $APP_NAME \
     --max-instances=$MAX_INSTANCES --min-instances=$MIN_INSTANCES --port=$APP_PORT \
     --env-vars-file=$APP_ENV_FILE \
-    --image=$REGION_B-docker.pkg.dev/$(gcloud config get project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION \
+    --image=$REGION-docker.pkg.dev/$(gcloud config get project)/$APP_ARTIFACT_NAME/$APP_NAME:$APP_VERSION \
     --allow-unauthenticated \
     --region=$REGION \
     --service-account=$APP_SERVICE_ACCOUNT_NAME@$(gcloud config get project).iam.gserviceaccount.com 
@@ -82,19 +82,13 @@ git add .
 git commit -m "Add and modify files"
 git push
 
-gcloud artifacts repositories create $APP_ARTIFACT_NAME \
-    --repository-format=docker \
-    --location=$REGION_B \
-    --description="Docker repository"
-echo "\n #----------Artifact Repository has been successfully created.----------# \n"
-
 # Create a Cloud Build Trigger
 # gcloud builds triggers create cloud-source-repositories --help
 gcloud builds triggers create cloud-source-repositories \
     --repo="$REPO" \
     --branch-pattern="^master$" \
     --build-config="cloudbuild.yaml" \
-    --region="$REGION_B" \
+    --region="$REGION" \
     --name="$TRIGGER_NAME"
     
     # --service-account=projects/$SA/serviceAccounts/$SA@$SA.iam.gserviceaccount.com \
