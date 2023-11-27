@@ -151,3 +151,4 @@ steps:
     --region=$REGION \
     --service-account=$APP_SERVICE_ACCOUNT_NAME@$(gcloud config get project).iam.gserviceaccount.com 
 EOF
+

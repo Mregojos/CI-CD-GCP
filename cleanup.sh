@@ -125,4 +125,8 @@ gcloud compute networks subnets delete $SUBNET_NAME-$NOTEBOOK_REGION --region=$N
 # Delete Custom VPC
 gcloud compute networks delete $VPC_NAME --quiet
 
-echo "\n #----------Custom Roles have been Successfully deleted.----------# \n"
+# CI/CD GCP Cleanup
+gcloud builds triggers $TRIGGER_NAME --region=$REGION
+gcloud source repos delete $REPO
+
+echo "\n #----------Done.----------# \n"
