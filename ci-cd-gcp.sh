@@ -1,4 +1,4 @@
-# Environment
+# Environment Variables
 #----------Artifact Registry Environment Variables----------#
 VERSION="i"
 APP_NAME="ci-cd-gcp-$VERSION"
