@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  script: |
+      gcloud builds submit       --region=us-west2       --tag us-west1-docker.pkg.dev/mattgcpprojects/ci-cd-gcp-i-artifact-registry/ci-cd-gcp-i:latest
+- name: 'gcr.io/cloud-builders/gcloud'
+  script: |
+    gcloud run deploy ci-cd-gcp-i     --max-instances=1 --min-instances=1 --port=9000     --env-vars-file=.env.yaml     --image=us-west1-docker.pkg.dev/mattgcpprojects/ci-cd-gcp-i-artifact-registry/ci-cd-gcp-i:latest     --allow-unauthenticated     --region=us-west1     --service-account=ci-cd-gcp-i-app-sa@mattgcpprojects.iam.gserviceaccount.com 
