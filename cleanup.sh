@@ -128,5 +128,6 @@ gcloud compute networks delete $VPC_NAME --quiet
 # CI/CD GCP Cleanup
 gcloud builds triggers delete $TRIGGER_NAME --region=$REGION
 gcloud source repos delete $REPO --quiet
+rm -rf ci-cd-gcp-repo
 
 echo "\n #----------Done.----------# \n"
