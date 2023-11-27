@@ -67,7 +67,17 @@ REPO="ci-cd-gcp-repo"
 # Create a Google Cloud Source Repository
 gcloud source repos create $REPO
 
-# Create a Cloud Build Trigger
+# Clone the project
+gcloud source repos clone $REPO --project=$(gcloud config get project)
+
+cd ci-cd-gcp-repo
+cp -rf ~/ci-cd-gcp/app/* ~/ci-cd-gcp/ci-cd-gcp-repo
+
+git add .
+git commit -m "Add and modify files"
+git push
+
+#---------------------------Create a Cloud Build Trigger
 # gcloud builds triggers create cloud-source-repositories --help
 gcloud builds triggers create cloud-source-repositories \
     --repo="$REPO" \
@@ -77,7 +87,7 @@ gcloud builds triggers create cloud-source-repositories \
     --name="$TRIGGER_NAME"
     # --service-account=projects/$SA/serviceAccounts/$SA@$SA.iam.gserviceaccount.com 
 
-# Grant Permissions
+#---------------------------Grant Permissions
 PROJECT_ID=$(gcloud config list --format='value(core.project)')
 # Enable Cloud Resource Manager
 PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
@@ -96,13 +106,7 @@ gcloud iam service-accounts add-iam-policy-binding \
     --member=serviceAccount:$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')@cloudbuild.gserviceaccount.com \
     --role=roles/iam.serviceAccountUser
 
-# Clone the project
-gcloud source repos clone $REPO --project=$(gcloud config get project)
-
-cd ci-cd-gcp-repo
-cp -rf ~/ci-cd-gcp/app/* ~/ci-cd-gcp/ci-cd-gcp-repo
-
-# Create a cloudbuild.yaml file
+#--------------------------------Create a cloudbuild.yaml file
 cat > cloudbuild.yaml <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -153,7 +157,7 @@ git push
 
 
 
-######################################################Extra###########################
+###################################################### Extra ###########################
 
 # Build Template A
 cat > cloudbuild_A.yaml <<EOF
