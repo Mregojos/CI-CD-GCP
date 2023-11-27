@@ -20,8 +20,9 @@ MAX_INSTANCES=1
 
 #----------Source Repository and Trigger Environment Variables----------#
 SA=$(gcloud config get project)
-REPO="ci-cd-gcp-repo"
 TRIGGER_NAME="ci-cd-gcp-trigger"
+REPO="ci-cd-gcp-repo"
+
 
 # Create a Google Cloud Source Repository
 gcloud source repos create $REPO
@@ -60,11 +61,12 @@ git commit -m "Add and modify files"
 git push
 
 # Create a Cloud Build Trigger
-gcloud builds triggers create cloud-source-repositories --name=$TRIGGER_NAME \
-    --service-account="$SA@$SA.iam.gserviceaccount.com" \
+# gcloud builds triggers create cloud-source-repositories --help
+gcloud builds triggers create cloud-source-repositories \
+    --name="ci-cd-gcp-trigger" \ 
+    --repo="ci-cd-gcp-repo" \
     --branch-pattern=".*" \
-    --repo="$REPO" \
-    --build-config="cloudbuild.yaml" \
-    --region="$REGION"
+    --build-config="cloudbuild.yaml" 
 
-
+    # --service-account="$SA@$SA.iam.gserviceaccount.com" \
+    #  --region="$REGION"
