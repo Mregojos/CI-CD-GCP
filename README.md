@@ -39,8 +39,7 @@ Monitor: Cloud Operations Suite
 
 ```sh
 # CI/CD Pipeline Automation
-sh infrastructure-automation-gcp.sh
-sh ci-cd-gcp.sh
+sh infrastructure-automation-gcp.sh && sh ci-cd-gcp.sh
 
 # Clean Up
 sh cleanup.sh
