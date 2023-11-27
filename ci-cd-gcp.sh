@@ -108,10 +108,10 @@ gcloud projects add-iam-policy-binding $(gcloud config list --format='value(core
     --member=serviceAccount:$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')@cloudbuild.gserviceaccount.com \
     --role=roles/run.admin
 # Grant the IAM Service Account User role to the Cloud Build service account for the Cloud Run runtime service account
-gcloud iam service-accounts add-iam-policy-binding \
-    $(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')-compute@developer.gserviceaccount.com \
-    --member=serviceAccount:$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')@cloudbuild.gserviceaccount.com \
-    --role=roles/iam.serviceAccountUser
+#  gcloud iam service-accounts add-iam-policy-binding \
+#    $(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')-compute@developer.gserviceaccount.com \
+#    --member=serviceAccount:$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')@cloudbuild.gserviceaccount.com \
+#    --role=roles/iam.serviceAccountUser
 # Grant the IAM Service Account User role to the Cloud Build service account for the Cloud Run runtime service account
 gcloud iam service-accounts add-iam-policy-binding \
     $APP_SERVICE_ACCOUNT_NAME@$(gcloud config get project).iam.gserviceaccount.com \
