@@ -19,30 +19,32 @@
 * Cloud Build -> Build the image and submit to Artifact Registry
 * Cloud Run -> Run the App
 * Vertex AI Language Model -> Chat Language Model
+* Source Repositories -> Version Control Management
 
 ---
-### Using gcloud and shell scripting
+### Build CI/CD Pipelines
 
 #### Prerequisite
 * GCP Account
 * Project Owner IAM Role
 
+##### Project: 
+```md
+Source Control Management : GCP Source Repositories
+Build and Test: Cloud Build
+Release: GCP Artifact Registry
+Deploy: Cloud Run 
+Monitor: Cloud Operations Suite
+```
+
 ```sh
-# Automate the GCP Services Creation
+# CI/CD Pipeline Automation
 sh infrastructure-automation-gcp.sh
+sh ci-cd-gcp.sh
 
 # Clean Up
 sh cleanup.sh
 ```
----
-    Project: (# TO DO)
-    | Code Source / Source Control Management : GCP Cloud Repositories / GitHub
-    | Build and Test: Cloud Build
-    | Release: GCP Artifact Registry / GCP Cloud Repositories / GitHub
-    | Deploy: GKE / Cloud Run 
-    | Monitor: Cloud Operations Suite
-### Build CI/CD Pipelines
-
 
 ---
 ### Resources
