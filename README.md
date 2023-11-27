@@ -4,7 +4,37 @@
 ![images](./images/CI-CD-GCP-.drawio.png)
 
     > DevOps: Plan -> Code -> Build -> Test -> Release -> Deploy -> Operate -> Monitor
-    
+
+---
+## GCP Services
+![Infrastructure Automation Services GCP](images/infra.drawio.png)
+
+* Custom VPC with three subnets -> App Network
+* Static IP Address -> Database Static Ip Address
+* Cloud Storage -> Store Startup Script 
+* IAM Service Account  -> For Security
+* IAM Custom Role -> For Security 
+* Compute Engine -> Database Server
+* Artifact Registry -> Store Container Image
+* Cloud Build -> Build the image and submit to Artifact Registry
+* Cloud Run -> Run the App
+* Vertex AI Language Model -> Chat Language Model
+
+---
+### Using gcloud and shell scripting
+
+#### Prerequisite
+* GCP Account
+* Project Owner IAM Role
+
+```sh
+# Automate the GCP Services Creation
+sh infrastructure-automation-gcp.sh
+
+# Clean Up
+sh cleanup.sh
+```
+---
     Project: (# TO DO)
     | Code Source / Source Control Management : GCP Cloud Repositories / GitHub
     | Build and Test: Cloud Build

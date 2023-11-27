@@ -1,7 +1,7 @@
 # Environment
 # TO DO: In production, change the values to be more secure. 
 export VERSION="i" # Change this
-export APP_NAME="ci-cd-$VERSION" # change the value in production 
+export APP_NAME="ci-cd-gcp-$VERSION" # change the value in production 
 export DB_PASSWORD=$APP_NAME # change the value in production 
 
 export DB_CONTAINER_NAME="$APP_NAME-postgres-sql"

@@ -1,6 +1,6 @@
 #---------Application Name Environment Variables----------#
 VERSION="i"
-APP_NAME="ci-cd-$VERSION"
+APP_NAME="ci-cd-gcp-$VERSION"
 
 #---------Project Environment Variables---------#
 PROJECT_NAME="$(gcloud config get project)"
@@ -17,10 +17,10 @@ ZONE="us-west1-a"
 BOOT_DISK_SIZE="30"
 TAGS="db"
 FIREWALL_RULES_NAME="$APP_NAME-ports"
-STATIC_IP_ADDRESS_NAME="db-static-ip-address"
+STATIC_IP_ADDRESS_NAME="$APP_NAME-db-static-ip-address"
 BUCKET_NAME="$APP_NAME-startup-script"
-STARTUP_SCRIPT_BUCKET_SA="startup-script-bucket-sa"
-STARTUP_SCRIPT_BUCKET_CUSTOM_ROLE="bucketCustomRole.$VERSION"
+STARTUP_SCRIPT_BUCKET_SA="$APP_NAME-startup-script-bucket-sa"
+STARTUP_SCRIPT_BUCKET_CUSTOM_ROLE="cicdbucketCustomRole.$VERSION"
 # STARTUP_SCRIPT_NAME="$APP_NAME-startup-script.sh"
 
 # For Notebook 
@@ -47,8 +47,8 @@ CLOUD_BUILD_REGION="us-west2"
 REGION="us-west1"
 APP_ARTIFACT_NAME="$APP_NAME-artifact-registry"
 APP_VERSION="latest"
-APP_SERVICE_ACCOUNT_NAME="app-service-account"
-APP_CUSTOM_ROLE="appCustomRole.$VERSION"
+APP_SERVICE_ACCOUNT_NAME="$APP_NAME-app-service-account"
+APP_CUSTOM_ROLE="cicdappCustomRole.$VERSION"
 APP_PORT=9000
 APP_ENV_FILE=".env.yaml"
 MIN_INSTANCES=1
