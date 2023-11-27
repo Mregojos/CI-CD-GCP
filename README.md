@@ -7,7 +7,7 @@
 
 ---
 ## GCP Services
-![Infrastructure Automation Services GCP](images/infra.drawio.png)
+[Infrastructure Automation Services GCP](images/CI-CD-GCP-Services.drawio.png) 
 
 * Custom VPC with three subnets -> App Network
 * Static IP Address -> Database Static Ip Address
@@ -41,6 +41,8 @@ sh cleanup.sh
     | Release: GCP Artifact Registry / GCP Cloud Repositories / GitHub
     | Deploy: GKE / Cloud Run 
     | Monitor: Cloud Operations Suite
+### Build CI/CD Pipelines
+
 
 ---
 ### Resources
