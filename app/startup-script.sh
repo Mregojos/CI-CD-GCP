@@ -1,6 +1,6 @@
 # Environment
-export VERSION="i"
-export APP_NAME="ci-cd-gcp-$VERSION"
+export VERSION="ii"
+export APP_NAME="ci-cd-gcp-ii"
 export DB_PASSWORD="password"
 export DB_CONTAINER_NAME="$APP_NAME-sql"
 export DB_USER="$APP_NAME-admin" 
