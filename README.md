@@ -58,7 +58,7 @@ sh cleanup.sh
 * Google Cloud Cloud Repositories
 * Google Cloud Cloud Build: https://cloud.google.com/build
 * Google Cloud Artifact Registry
-* Google Cloud Cloud Google Kubernetes Engine (GKE): https://cloud.google.com/kubernetes-engine
+* Google Cloud Cloud Google Kubernetes Engine (GKE): https://cloud.google.com/kubernetes-engine/docs
 * Google Cloud Cloud Run: https://cloud.google.com/run
 * Google Cloud Operations Suite
 
