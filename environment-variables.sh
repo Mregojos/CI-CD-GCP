@@ -1,6 +1,6 @@
 # Environment Variables
 #---------Application Name Environment Variables----------#
-export VERSION="ii"
+export VERSION="i"
 export APP_NAME="ci-cd-gcp-$VERSION"
 export DB_PASSWORD="password"
 export ADMIN_PASSWORD="password"
