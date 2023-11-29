@@ -1,11 +1,8 @@
 # Environment
-# TO DO: In production, change the values to be more secure. 
-export VERSION="i" # Change this
-export APP_NAME="ci-cd-gcp-$VERSION" # change the value in production 
-export DB_PASSWORD=$APP_NAME # change the value in production 
-
-export DB_CONTAINER_NAME="$APP_NAME-postgres-sql"
-# export DB_NAME="$APP_NAME-admin"
+export VERSION="i"
+export APP_NAME="ci-cd-gcp-$VERSION"
+export DB_PASSWORD="password"
+export DB_CONTAINER_NAME="$APP_NAME-sql"
 export DB_USER="$APP_NAME-admin" 
 
 # docs.docker.com
@@ -27,6 +24,6 @@ docker run -d \
     -p 5000:5432 \
     postgres
 docker run -p 8000:80 \
-    -e 'PGADMIN_DEFAULT_EMAIL=matt@example.com' \
-    -e 'PGADMIN_DEFAULT_PASSWORD=sitedbapppassword' \
+    -e 'PGADMIN_DEFAULT_EMAIL=guest@example.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=password' \
     -d dpage/pgadmin4

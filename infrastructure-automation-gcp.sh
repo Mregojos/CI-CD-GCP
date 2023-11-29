@@ -6,64 +6,6 @@ echo "\n #----------Services have been successfully enabled.----------# \n"
 # Directory
 cd app
 
-#---------Application Name Environment Variables----------#
-VERSION="i"
-APP_NAME="ci-cd-gcp-$VERSION"
-
-#---------Project Environment Variables---------#
-PROJECT_NAME="$(gcloud config get project)"
-
-#----------Database Instance Environment Variables----------#
-VPC_NAME="$APP_NAME-vpc"
-SUBNET_NAME="$APP_NAME-subnet"
-RANGE_A='10.100.0.0/20'
-RANGE_B='10.200.0.0/20'
-DB_INSTANCE_NAME="$APP_NAME-db"
-MACHINE_TYPE="e2-micro"
-REGION="us-west1"
-ZONE="us-west1-a"
-BOOT_DISK_SIZE="30"
-TAGS="db"
-FIREWALL_RULES_NAME="$APP_NAME-ports"
-STATIC_IP_ADDRESS_NAME="$APP_NAME-db-static-ip-address"
-BUCKET_NAME="$APP_NAME-startup-script"
-STARTUP_SCRIPT_BUCKET_SA="$APP_NAME-bucket-sa"
-STARTUP_SCRIPT_BUCKET_CUSTOM_ROLE="cicdbucketCustomRole.$VERSION"
-# STARTUP_SCRIPT_NAME="$APP_NAME-startup-script.sh"
-
-# For Notebook 
-NOTEBOOK_REGION='us-central1'
-RANGE_C='10.150.0.0/20'
-
-#---------Database Credentials----------#
-DB_CONTAINER_NAME="$APP_NAME-postgres-sql"
-DB_NAME="$APP_NAME-admin"
-DB_USER="$APP_NAME-admin" 
-# DB_HOST=$(gcloud compute addresses describe $STATIC_IP_ADDRESS_NAME --region $REGION | grep "address: " | cut -d " " -f2)
-DB_HOST=$(gcloud compute instances list --filter="name=$DB_INSTANCE_NAME" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
-DB_PORT=5000
-DB_PASSWORD=$APP_NAME 
-PROJECT_NAME="$(gcloud config get project)"
-ADMIN_PASSWORD=$APP_NAME 
-APP_PORT=9000
-APP_ADDRESS=""
-DOMAIN_NAME=""
-SPECIAL_NAME=$APP_NAME 
-
-#----------Deployment Environment Variables----------#
-CLOUD_BUILD_REGION="us-west2"
-REGION="us-west1"
-APP_ARTIFACT_NAME="$APP_NAME-artifact-registry"
-APP_VERSION="latest"
-APP_SERVICE_ACCOUNT_NAME="$APP_NAME-app-sa"
-APP_CUSTOM_ROLE="cicdappCustomRole.$VERSION"
-APP_PORT=9000
-APP_ENV_FILE=".env.yaml"
-MIN_INSTANCES=1
-MAX_INSTANCES=1
-
-echo "\n #----------Exporting Environment Variables is done.----------# \n"
-
 #----------Database Instance Section----------#
 # Create a Custom VPC
 gcloud compute networks create $VPC_NAME --subnet-mode=custom
@@ -84,6 +26,10 @@ echo "\n #----------The bucket has been successfully created.---------- # \n"
 # Startup-script.sh
 # touch startup-script.sh
 # Change the version
+# using sed: sed -i 's/<TEXT>/<NEW TEXT/g' <FILE>
+sed -i s/VERSION=".*"/VERSION=\""$VERSION"\"/g startup-script.sh
+sed -i s/APP_NAME=".*"/APP_NAME=\""$APP_NAME"\"/g startup-script.sh
+sed -i s/DB_PASSWORD=".*"/DB_PASSWORD=\""$DB_PASSWORD"\"/g startup-script.sh
 
 # Copy the file to Cloud Storage
 gcloud storage cp startup-script.sh gs://$BUCKET_NAME

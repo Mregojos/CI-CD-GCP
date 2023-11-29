@@ -39,6 +39,7 @@ Monitor: Cloud Operations Suite
 
 ```sh
 # CI/CD Pipeline Automation
+source environment-variables.sh
 sh infrastructure-automation-gcp.sh && sh ci-cd-gcp.sh
 
 # Clean Up
