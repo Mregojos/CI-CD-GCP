@@ -92,6 +92,7 @@ git add .
 git commit -m "Add and modify files"
 git push
 
+echo "\n #----------DONE----------# \n"
 
 
 ###################################################### Extra ###########################

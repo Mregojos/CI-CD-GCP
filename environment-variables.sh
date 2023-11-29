@@ -57,8 +57,6 @@ export APP_ENV_FILE=".env.yaml"
 export MIN_INSTANCES=1
 export MAX_INSTANCES=1
 
-echo "\n #----------Exporting Environment Variables is done.----------# \n"
-
 # CI/CD GCP
 
 #----------Source Repository and Trigger Environment Variables----------#
@@ -66,3 +64,5 @@ export SA=$(gcloud config get project)
 export TRIGGER_NAME="ci-cd-gcp-trigger"
 export REPO="ci-cd-gcp-repo"
 export TRIGGER_REGION="us-central1"
+
+echo "\n #----------Exporting environment variables is done.----------# \n"
