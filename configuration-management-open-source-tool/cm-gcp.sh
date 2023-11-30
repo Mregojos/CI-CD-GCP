@@ -40,4 +40,17 @@ ansible all -m ping -i inventory.txt -u $USERNAME
 
 # With inventory
 # ansible-playbook <playbook name>.yaml -v <inventory>.yaml
+
+# servers.yaml
 ansible-playbook playbooks/$PLAYBOOK_NAME.yaml -i inventory.txt -u $USERNAME
+
+# Create a password on instances
+# Go to instances SSH
+sudo passwd <USERNAME>
+# Creat a new password
+
+# Try to connet via SSH
+ssh $USERNAME@$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
+
+# apt.yaml
+ansible-playbook playbooks/apt.yaml -i inventory.txt -u $USERNAME
