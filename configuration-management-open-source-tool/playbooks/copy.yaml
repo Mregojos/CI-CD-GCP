@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create a file on localhost
+      copy: 
+        src: file.txt
+        dest: file/file.txt

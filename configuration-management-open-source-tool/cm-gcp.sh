@@ -1,3 +1,9 @@
 # Configuration Management on GCP
 
-# Install Configuration Management
+# Configuration Management
+sh cm.sh
+
+# Try localhost
+ansible-playbook playbooks/localhost.yaml
+# or
+ansible-playbook localhost.yaml
