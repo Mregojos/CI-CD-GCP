@@ -19,6 +19,15 @@ cat ~/.ssh/id_rsa.pub
 # Create two Compute Engine instances
 gcloud compute instances create vm-a vm-b --zone=$ZONE
 
+# Add ip adresses to inventory
+vm_a_ip=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
+vm_b_ip=$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)" )
+cat > inventory.txt <<EOF
+[servers]
+$vm_a_ip
+$vm_b_ip
+EOF
+
 # Copy the key to other machines
 mkdir ~/.ssh
 nano ~/.ssh/authorized_keys
