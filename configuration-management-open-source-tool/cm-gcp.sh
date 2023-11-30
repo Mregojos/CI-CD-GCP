@@ -2,7 +2,7 @@
 
 # Environemnt Variable
 ZONE="us-west1-a"
-PLAYBOOK_NAME=""
+PLAYBOOK_NAME="servers"
 USERNAME=""
 
 # Configuration Management
@@ -27,8 +27,8 @@ nano ~/.ssh/authorized_keys
 ssh $USERNAME@$IP_ADDRESS
 
 # Test using ping
-ansible all -m ping -i inventory.txt
+ansible all -m ping -i inventory.txt -u $USERNAME
 
 # With inventory
 # ansible-playbook <playbook name>.yaml -v <inventory>.yaml
-ansible-playbook $PLAYBOOK_NAME.yaml -v inventory.txt
+ansible-playbook playbooks/$PLAYBOOK_NAME.yaml -i inventory.txt -u $USERNAME
