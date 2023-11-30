@@ -1,1 +1,2 @@
-[ComputeEngine]
+[servers]
+vm-ia@35.247.120.9

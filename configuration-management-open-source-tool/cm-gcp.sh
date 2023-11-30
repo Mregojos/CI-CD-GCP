@@ -2,6 +2,8 @@
 
 # Environemnt Variable
 ZONE="us-west1-a"
+PLAYBOOK_NAME=""
+USERNAME=""
 
 # Configuration Management
 sh cm.sh
@@ -19,8 +21,14 @@ gcloud compute instances create vm-a vm-b --zone=$ZONE
 
 # Copy the key to other machines
 mkdir ~/.ssh
-nano ~/..sh/authorized_keys
+nano ~/.ssh/authorized_keys
+
+# Test it
+ssh $USERNAME@$IP_ADDRESS
+
+# Test using ping
+ansible all -m ping -i inventory.txt
 
 # With inventory
 # ansible-playbook <playbook name>.yaml -v <inventory>.yaml
-ansible-playbook <playbook name>.yaml -v <inventory>.yaml
+ansible-playbook $PLAYBOOK_NAME.yaml -v inventory.txt
