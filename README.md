@@ -47,6 +47,23 @@ sh cleanup.sh
 ```
 
 ---
+### CI/CD Pipelines using GCP Services and OSS
+
+Prerequisite
+* GCP Account
+* Project Owner IAM Role
+
+```sh
+# CI/CD Pipeline Automation
+cd ci-cd-oss
+source ci-cd-env-oss.sh
+sh ci-cd-infra-oss.sh && sh ci-cd-gcp-oss.sh
+
+# Clean Up
+source ci-cd-env-oss.sh
+sh ci-cd-oss-cleanup.sh
+```
+---
 ### Resources
 * GitHub Repository: https://github.com/mregojos/CI-CD-GCP
 * App GitHub Repository: https://github.com/mregojos/model-deployment
