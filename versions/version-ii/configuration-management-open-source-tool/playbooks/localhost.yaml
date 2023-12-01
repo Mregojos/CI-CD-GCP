@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create a file on localhost
+      command: touch file.txt  
+    - name: Create a directory
+      command: mkdir file  
