@@ -22,13 +22,12 @@
 * Source Repositories -> Version Control Management
 
 ---
-### Build CI/CD Pipelines
+### CI/CD Pipelines using GCP Services
 
-#### Prerequisite
+Prerequisite
 * GCP Account
 * Project Owner IAM Role
 
-##### Project: 
 ```md
 Source Control Management : GCP Source Repositories
 Build and Test: Cloud Build
@@ -36,6 +35,7 @@ Release: GCP Artifact Registry
 Deploy: Cloud Run 
 Monitor: Cloud Operations Suite
 ```
+
 
 ```sh
 # CI/CD Pipeline Automation
@@ -50,16 +50,8 @@ sh cleanup.sh
 ---
 ### Resources
 * GitHub Repository: https://github.com/mregojos/CI-CD-GCP
+* App GitHub Repository: https://github.com/mregojos/model-deployment
+* Infrastructure Automation on GCP GitHub Repository: https://github.com/mregojos/infrastructure-automation-gcp
 * GitHub Repository Tech Stack for Cloud, DevOps, SRE: https://github.com/mregojos/tech-stack
 * Google Cloud Documentation: https://cloud.google.com/docs
-* Google Cloud Architecture: https://cloud.google.com/architecture
-* Google Cloud Architecture Framework: https://cloud.google.com/architecture/framework
-* Google Cloud CI/CD: https://cloud.google.com/ ci-cd
-* Google Cloud DevOps: https://cloud.google.com/devops
-* Google Cloud Cloud Repositories
-* Google Cloud Cloud Build: https://cloud.google.com/build
-* Google Cloud Artifact Registry
-* Google Cloud Cloud Google Kubernetes Engine (GKE): https://cloud.google.com/kubernetes-engine/docs
-* Google Cloud Cloud Run: https://cloud.google.com/run
-* Google Cloud Operations Suite
 
