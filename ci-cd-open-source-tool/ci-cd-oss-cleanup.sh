@@ -68,5 +68,6 @@ gcloud compute networks subnets delete $SUBNET_NAME-$NOTEBOOK_REGION --region=$N
 gcloud compute networks delete $VPC_NAME --quiet
 
 # CI/CD OSS Cleanup
+gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-oss --quiet
 
 echo "\n #----------Done.----------# \n"
