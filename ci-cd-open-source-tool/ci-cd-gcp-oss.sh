@@ -1,4 +1,4 @@
-sh ci-cd-oss.sh
+sh ci-cd-oss-gcloud.sh
 
 # firewall
 gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-oss \
