@@ -4,5 +4,5 @@
   tasks:
     - name: Using apt
       apt:
-        name: tree
-        state: absent
+        name: 
+        state: present 
