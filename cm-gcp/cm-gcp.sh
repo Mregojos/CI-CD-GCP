@@ -20,6 +20,8 @@ cat ~/.ssh/id_rsa.pub
 gcloud compute instances create vm-a vm-b --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
 
+gcloud compute ssh --zone $ZONE vm-a
+
 # Add ip adresses to inventory
 vm_a_ip=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
 vm_b_ip=$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)" )
