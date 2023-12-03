@@ -55,13 +55,16 @@ Prerequisite
 
 ```sh
 # CI/CD Pipeline Automation
-cd ci-cd-oss
-source ci-cd-env-oss.sh
-sh ci-cd-infra-oss.sh && sh ci-cd-gcp-oss.sh
+# source ci-cd-oss-env.sh
+# sh infrastructure-automation-gcp.sh
+# cd ci-cd-oss-gcp
+# source ci-cd-oss-env.sh
+# sh ci-cd-gcp-oss.sh
 
 # Clean Up
-source ci-cd-env-oss.sh
-sh ci-cd-oss-cleanup.sh
+# cd ci-cd-oss-gcp
+# source ci-cd-oss-env.sh
+# sh ci-cd-oss-cleanup.sh
 ```
 ---
 ### Resources
