@@ -10,7 +10,7 @@ echo "DB_PASSWORD?"
 read DB_PASSWORD
 echo "ADMIN_PASSWORD?"
 read ADMIN_PASSWORD
-echo "SPECIAL_NAME"
+echo "SPECIAL_NAME?"
 read SPECIAL_NAME
 
 #---------Project Environment Variables---------#
