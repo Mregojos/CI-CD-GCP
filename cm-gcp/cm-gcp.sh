@@ -1,9 +1,9 @@
 # Configuration Management on GCP
 
 # Environemnt Variable
-ZONE="us-west1-a"
-PLAYBOOK_NAME="servers"
-USERNAME=""
+export ZONE="us-west1-a"
+export PLAYBOOK_NAME="servers"
+export USERNAME=""
 
 # Configuration Management
 sh cm.sh
@@ -17,7 +17,8 @@ ssh-keygen
 cat ~/.ssh/id_rsa.pub
 
 # Create two Compute Engine instances
-gcloud compute instances create vm-a vm-b --zone=$ZONE 
+gcloud compute instances create vm-a vm-b --zone=$ZONE \
+    --metadata-from-file=startup-script=startup-script.sh
 
 # Add ip adresses to inventory
 vm_a_ip=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 

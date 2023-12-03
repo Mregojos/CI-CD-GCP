@@ -13,6 +13,7 @@ pipx install --include-deps ansible
 # Open new shell
 # Adding Ansible command shell completion
 pipx inject --include-apps ansible argcomplete
+sh ~/.bashrc
 
 # Using pip
 python3 -m pip install --user ansible
