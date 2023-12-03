@@ -2,16 +2,9 @@
 #---------Application Name Environment Variables----------#
 export VERSION="i"
 export APP_NAME="ci-cd-gcp-$VERSION"
-# export DB_PASSWORD="password"
-# export ADMIN_PASSWORD="password"
-# export SPECIAL_NAME="guest"
-# Using read
-echo "DB_PASSWORD?"
-read DB_PASSWORD
-echo "ADMIN_PASSWORD?"
-read ADMIN_PASSWORD
-echo "SPECIAL_NAME?"
-read SPECIAL_NAME
+export DB_PASSWORD="password"
+export ADMIN_PASSWORD="password"
+export SPECIAL_NAME="guest"
 
 #---------Project Environment Variables---------#
 export PROJECT_NAME="$(gcloud config get project)"
