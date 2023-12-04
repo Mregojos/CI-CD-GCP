@@ -1,5 +1,6 @@
 ---
 - hosts: vms
+  become: true
   name: Using file module
   tasks:
     - name: Create a file on localhost

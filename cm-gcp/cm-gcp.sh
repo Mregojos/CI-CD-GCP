@@ -93,15 +93,22 @@ ssh $USER@$VM_A_IP
 ssh $USER@$VM_B_IP
 ssh $USER@$VM_C_IP
 
-# With inventory
+# With playbooks and inventory
 # ansible-playbook <playbook name>.yaml -v <inventory>.yaml
-# script.yaml
 ansible-playbook playbooks-vms/script.yaml -i inventory.txt -u $USER
 ansible-playbook playbooks-vms/command.yaml -i inventory.txt -u $USER
 ansible-playbook playbooks-vms/file.yaml -i inventory.txt -u $USER
 ansible-playbook playbooks-vms/copy.yaml -i inventory.txt -u $USER
 ansible-playbook playbooks-vms/apt.yaml -i inventory.txt -u $USER
 ansible-playbook playbooks-vms/pip.yaml -i inventory.txt -u $USER
+
+# Multiple modules
+ansible-playbook playbooks-vms/multiple.yaml -i inventory.txt -u $USER
+
+# Playbook
+# become: true or yes # Using root
+# State: Present, etc.
+
 # Check the vm
 # gcloud compute ssh --zone $ZONE vm-a
 # or

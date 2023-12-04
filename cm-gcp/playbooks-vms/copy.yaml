@@ -1,5 +1,6 @@
 ---
 - hosts: vms
+  name: Using copy module
   tasks:
     - name: Copy a file to the vms
       copy: 

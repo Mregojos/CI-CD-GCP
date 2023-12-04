@@ -1,0 +1,60 @@
+---
+- hosts: vms
+  name: Using script module
+  become: true
+  tasks:
+    - name: Using script
+      script: script.sh  
+- hosts: vms
+  name: Using Command Module
+  tasks:
+    - name: Create a file
+      command: touch command.txt
+    - name: Create a directory
+      command: mkdir file  
+    - name: Remove a file
+      command: rm command.txt
+    - name: Remove a directory
+      command: rmdir file  
+- hosts: vms
+  become: true
+  name: Using file module
+  tasks:
+    - name: Create a file on localhost
+      file: 
+        name: file.txt
+        state: touch
+    - name: Create a directory
+      file:
+        name: file
+        state: directory
+    - name: Remove the file
+      file:
+        name: file.txt
+        state: absent
+    - name: Remove directory
+      file:
+        name: file
+        state: absent
+- hosts: vms
+  name: Using copy module
+  tasks:
+    - name: Copy a file to the vms
+      copy: 
+        src: script.sh
+        dest: script.sh
+- hosts: vms
+  name: Using apt module
+  tasks:
+    - name: Python Pip
+      apt:
+        name: python3-pip
+        state: present 
+- hosts: vms
+  become: true
+  name: Using pip module 
+  tasks:
+    - name: Jupyter Lab
+      pip: 
+        name: jupyterlab  
+        state: present # present, absent, etc.
