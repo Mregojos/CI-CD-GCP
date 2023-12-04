@@ -4,7 +4,7 @@ echo "Username?"
 read -s USERNAME # This VM Name
 
 # Environment Variable for App
-export VERSION="i"
+export VERSION="ix"
 export APP_NAME="ci-cd-oss-gcp-$VERSION"
 export BUCKET_NAME="$APP_NAME-startup-script"
 export FIREWALL_RULES_NAME="$APP_NAME-ports"

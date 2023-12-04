@@ -14,8 +14,10 @@ cat > data-bucket.yaml << EOF
       file:
         name: file.txt
         state: touch
-    - name: test
-      command: gcloud storage cp file.txt gs://$BUCKET_NAME
+    - name: test (get)
+      command: gcloud storage cp gs://$BUCKET_NAME/startup-script.sh .
+    - name: test (write)
+      command: gcloud storage cp file.txt gs://$BUCKET_NAME/
 EOF
 
 # Create a ssh key if not yet created
@@ -44,7 +46,7 @@ ansible all -m ping -i app-inventory.txt -u $USER
 # Add IAM Policy binding
 gcloud projects add-iam-policy-binding $(gcloud config get project) \
     --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
-    --role=roles/storage.objectAdmin
+    --role=roles/storage.admin
 
 # with playbook
 ansible-playbook data-bucket.yaml -i app-inventory.txt -u $USER
