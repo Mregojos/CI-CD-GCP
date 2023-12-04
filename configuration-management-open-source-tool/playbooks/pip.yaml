@@ -1,8 +1,0 @@
----
-- hosts: localhost
-  become: true
-  tasks:
-    - name: Using pip
-      pip: 
-        name: streamlit  
-        state: present # present, absent, etc.

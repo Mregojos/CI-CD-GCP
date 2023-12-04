@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  become: true
-  tasks:
-    - name: Using script
-      script: script.sh  
