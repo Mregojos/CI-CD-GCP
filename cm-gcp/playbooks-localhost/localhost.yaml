@@ -1,7 +1,13 @@
 ---
 - hosts: localhost
+  name: Using command module
   tasks:
     - name: Create a file on localhost
       command: touch file.txt  
     - name: Create a directory
       command: mkdir file  
+    - name: Remove the file
+      command: rm file.txt
+    - name: Remove directory
+      command: rmdir file
+    

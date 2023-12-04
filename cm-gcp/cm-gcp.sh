@@ -1,16 +1,16 @@
 # Configuration Management on GCP
 
-# Environemnt Variable
-export ZONE="us-west1-a"
-export PLAYBOOK_NAME="servers"
-export USERNAME=""
-
 # Configuration Management
-sh cm.sh
+sudo apt update 
+sudo apt install ansible -y
+ansible --version
 
 # Try localhost
 # ansible-playbook <playbook name>.yaml
-ansible-playbook playbooks/localhost.yaml
+# Using command module
+ansible-playbook playbooks-localhost/localhost.yaml
+# Using file module 
+ansible-playbook playbooks-localhost/localhost.yaml
 
 # Create a ssh key
 ssh-keygen
