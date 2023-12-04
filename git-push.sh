@@ -16,6 +16,9 @@ echo "Successfully removed .env.* and checkpoints files ready to be pushed to re
 sed -i 's/export ADMIN_PASSWORD=".*"/export ADMIN_PASSWORD=""/g' environment-variables.sh 
 sed -i 's/export DB_PASSWORD=".*"/export DB_PASSWORD=""/g' environment-variables.sh 
 sed -i 's/export SPECIAL_NAME=".*"/export SPECIAL_NAME=""/g' environment-variables.sh
+sed -i 's/export ADMIN_PASSWORD=".*"/export ADMIN_PASSWORD=""/g' ci-cd-oss-gcp/environment-variables.sh 
+sed -i 's/export DB_PASSWORD=".*"/export DB_PASSWORD=""/g' ci-cd-oss-gcp/environment-variables.sh 
+sed -i 's/export SPECIAL_NAME=".*"/export SPECIAL_NAME=""/g' ci-cd-oss-gcp/environment-variables.sh
 sed -i 's/export ADMIN_PASSWORD=".*"/export ADMIN_PASSWORD=""/g' app/startup-script.sh 
 sed -i 's/export DB_PASSWORD=".*"/export DB_PASSWORD=""/g' app/startup-script.sh 
 
