@@ -1,7 +1,3 @@
 sudo apt update 
 sudo apt install python3-pip -y
 sudo apt install ansible -y
-# TO DO: Create a user
-# Public key
-touch ~/.ssh/authorized_keys
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+Jqz4y5sMLjLj3oB4yAqiNUpZpR7JZ+qO17tlBDot1o2v1fMute+gw/i5JbwXJwz7yb1dwWlFozXrNN9/CILCrnbGtF6S1SgawnV6tUEgbwZoqgINhpiTyP0Srdd78S6HgGuIg6vyjw4eQYxBFzuvr5iaeQQnoyND5F9EyxPnFJA6Gr32Zl/NLL7gQxy6pdTr/szV3R5EhjjkB6WR2w0yuzB/QZzOTzGC0mgonYkj3EDvw2xPLWB1naRO2CUgJhzo8w3chJA/FrOiOjqF28PqfuU3hZrGEB2umSNYN7yDbCbk/OZ9I13HTev2x9Ib1SWJAT6U/hfN9wlLvzwGLCV8sCbrTW3mcDHXICOQxc4B/eHqVzZwovG2wI+pBHsbGQ0mVWSaSRwI1uHGFmdax67Ew79rhu/0ZS5XBFxq5ns76fdFOKu5VHg5ZNjasYmKKhrC19v8q5B89wRJdTXx+vCgcstc/vWTV21FJFUDg7z6SEyKxtgSGxs0W/P7b+Z/zhc= jupyter@matt" >>  ~/.ssh/authorized_keys

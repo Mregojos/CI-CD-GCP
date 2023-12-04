@@ -41,6 +41,8 @@ gcloud compute instances create vm-b --zone=$ZONE \
 source cm-env.sh
 gcloud compute instances create vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
+# Add this to ssh-key manually
+echo $(cat ~/.ssh/id_rsa.pub)
 
 # Use gcloud ssh to connect vm-a
 gcloud compute ssh --zone $ZONE vm-a
@@ -48,11 +50,16 @@ gcloud compute ssh --zone $ZONE vm-a
 # Add ip adresses to inventory
 VM_A_IP=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 VM_B_IP=$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+VM_C_IP=$(gcloud compute instances list --filter="name=vm-C" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 cat > inventory.txt <<EOF
 [vms]
 $VM_A_IP
 $VM_B_IP
+$VM_C_IP
 EOF
+
+# Test using ping
+ansible all -m ping -i inventory.txt -u $USER
 
 # Copy Public Key
 cat ~/.ssh/id_rsa.pub
