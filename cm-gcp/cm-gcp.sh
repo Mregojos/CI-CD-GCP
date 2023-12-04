@@ -17,56 +17,64 @@ ansible-playbook playbooks-localhost/localhost.yaml
 
 # Create a ssh key
 ssh-keygen
-cat ~/.ssh/id_rsa.pub
+echo $(cat ~/.ssh/id_rsa.pub)
 
 # Create a startup script
 cat > startup-script.sh << EOF
 sudo apt update 
 sudo apt install python3-pip -y
 sudo apt install ansible -y
-# TO DO: Create a user
-# Public key
-touch ~/.ssh/authorized_keys
-echo "$(cat ~/.ssh/id_rsa.pub)" >>  ~/.ssh/authorized_keys
 EOF
 
 # Create a Compute Engine instances
-gcloud compute instances create vm-a --zone=$ZONE \
-    --metadata-from-file=startup-script=startup-script.sh
+gcloud compute instances create vm-c --zone=$ZONE \
+    --metadata-from-file=startup-script=startup-script.sh \
+    --metadata=ssh-keys=$USER:$(cat ~/.ssh/id_rsa.pub)
 
 # Use gcloud ssh to connect
-# gcloud compute ssh --zone $ZONE vm-a
+gcloud compute ssh --zone $ZONE vm-a
 
 # Add ip adresses to inventory
-vm_a_ip=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
+VM_A_IP=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
 cat > inventory.txt <<EOF
 [vms]
-$vm_a_ip
+$VM_A_IP
 EOF
 
+# Copy Public Key
+cat ~/.ssh/id_rsa.pub
 # Copy the key to other machines
-mkdir ~/.ssh
+gcloud compute ssh --zone $ZONE vm-a
 nano ~/.ssh/authorized_keys
 
 # Test it
-ssh $USERNAME@$IP_ADDRESS
+ssh $USER@$VM_A_IP
 
 # Test using ping
-ansible all -m ping -i inventory.txt -u $USERNAME
+ansible all -m ping -i inventory.txt -u $USER
 
 # With inventory
 # ansible-playbook <playbook name>.yaml -v <inventory>.yaml
 
-# servers.yaml
-ansible-playbook playbooks/$PLAYBOOK_NAME.yaml -i inventory.txt -u $USERNAME
+# script.yaml
+ansible-playbook playbooks-vms/script.yaml -i inventory.txt -u $USER
+
+# Check the vm
+gcloud compute ssh --zone $ZONE vm-a
+# or
+ssh $USER@$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+
+
+ssh $USER@$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+
+
+
+
+
+################################
 
 # Create a password on instances
 # Go to instances SSH
 sudo passwd <USERNAME>
 # Creat a new password
 
-# Try to connet via SSH
-ssh $USERNAME@$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
-
-# apt.yaml
-ansible-playbook playbooks/apt.yaml -i inventory.txt -u $USERNAME
