@@ -2,9 +2,9 @@
 #---------Application Name Environment Variables----------#
 export VERSION="i"
 export APP_NAME="ci-cd-gcp-$VERSION"
-export DB_PASSWORD="password"
-export ADMIN_PASSWORD="password"
-export SPECIAL_NAME="guest"
+export DB_PASSWORD=""
+export ADMIN_PASSWORD=""
+export SPECIAL_NAME=""
 
 #---------Project Environment Variables---------#
 export PROJECT_NAME="$(gcloud config get project)"
