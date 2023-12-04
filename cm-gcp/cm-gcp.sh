@@ -13,7 +13,7 @@ ansible --version
 # Using command module
 ansible-playbook playbooks-localhost/localhost.yaml
 # Using file module 
-ansible-playbook playbooks-localhost/localhost.yaml
+ansible-playbook playbooks-localhost/file.yaml
 
 # Create a ssh key
 ssh-keygen
@@ -30,6 +30,8 @@ EOF
 source cm-env.sh
 gcloud compute instances create vm-a vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
+# Use gcloud ssh to connect vm-a
+gcloud compute ssh --zone $ZONE vm-a
     
 # Create a Compute Engine instances with ssh-keys
 source cm-env.sh
@@ -41,11 +43,16 @@ gcloud compute instances create vm-b --zone=$ZONE \
 source cm-env.sh
 gcloud compute instances create vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
-# Add this to ssh-key manually
+# Add this to ssh-key manually on console
 echo $(cat ~/.ssh/id_rsa.pub)
 
-# Use gcloud ssh to connect vm-a
-gcloud compute ssh --zone $ZONE vm-a
+# Create a Compute Engine instances with update metadata
+source cm-env.sh
+gcloud compute instances create vm-d --zone=$ZONE \
+    --metadata-from-file=startup-script=startup-script.sh 
+gcloud compute instances add-metadata vm-d --metadata=ssh-keys=$USER:"$(cat ~/.ssh/id_rsa.pub)" --zone=$ZONE
+
+
 
 # Add ip adresses to inventory
 VM_A_IP=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
