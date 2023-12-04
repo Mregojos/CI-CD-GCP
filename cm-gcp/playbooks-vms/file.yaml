@@ -1,0 +1,21 @@
+---
+- hosts: vms
+  name: Using file module
+  tasks:
+    - name: Create a file on localhost
+      file: 
+        name: file.txt
+        state: touch
+    - name: Create a directory
+      file:
+        name: file
+        state: directory
+    - name: Remove the file
+      file:
+        name: file.txt
+        state: absent
+    - name: Remove directory
+      file:
+        name: file
+        state: absent
+    

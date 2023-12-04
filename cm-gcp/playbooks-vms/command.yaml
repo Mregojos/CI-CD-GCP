@@ -1,6 +1,8 @@
 ---
 - hosts: vms
-  become: true
+  name: Using Command Module
   tasks:
-    - name: Using command
+    - name: Using command to create a file
       command: touch command.txt
+    - name: Create a directory
+      command: mkdir file  

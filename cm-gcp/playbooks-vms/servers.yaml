@@ -1,7 +1,0 @@
----
-- hosts: servers
-  tasks:
-    - name: Create a file
-      command: touch file.txt  
-    - name: Create a directory
-      command: mkdir file  

@@ -1,8 +1,9 @@
 ---
 - hosts: vms
   become: true
+  name: Using pip module 
   tasks:
-    - name: Using pip
+    - name: Jupyter Lab
       pip: 
-        name: streamlit  
+        name: jupyterlab  
         state: present # present, absent, etc.

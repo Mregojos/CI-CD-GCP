@@ -1,7 +1,7 @@
 ---
 - hosts: vms
   tasks:
-    - name: Create a file on localhost
+    - name: Copy a file to the vms
       copy: 
-        src: script.txt
-        dest: script.txt
+        src: script.sh
+        dest: script.sh

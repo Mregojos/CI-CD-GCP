@@ -1,8 +1,8 @@
 ---
 - hosts: vms
-  become: true
+  name: Using apt module
   tasks:
-    - name: Using apt
+    - name: Python Pip
       apt:
-        name: 
+        name: python3-pip
         state: present 
