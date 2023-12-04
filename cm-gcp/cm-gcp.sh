@@ -128,3 +128,4 @@ ssh $USER@$(gcloud compute instances list --filter="name=vm-c" --format="value(n
 # sudo passwd <USERNAME>
 # Creat a new password
 
+
