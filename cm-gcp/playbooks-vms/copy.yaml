@@ -1,0 +1,7 @@
+---
+- hosts: vms
+  tasks:
+    - name: Create a file on localhost
+      copy: 
+        src: script.txt
+        dest: script.txt

@@ -1,0 +1,8 @@
+---
+- hosts: vms
+  become: true
+  tasks:
+    - name: Using apt
+      apt:
+        name: 
+        state: present 

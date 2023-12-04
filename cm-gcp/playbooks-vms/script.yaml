@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  become: vms
+  tasks:
+    - name: Using script
+      script: script.sh  
