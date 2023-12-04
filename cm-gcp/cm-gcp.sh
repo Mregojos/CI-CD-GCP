@@ -26,27 +26,30 @@ sudo apt install python3-pip -y
 sudo apt install ansible -y
 EOF
 
-# Create a Compute Engine instances
+# Create a Compute Engine instances 
+# It works, but you need to ssh first and add the key manually.
 source cm-env.sh
 gcloud compute instances create vm-a vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
 # Use gcloud ssh to connect vm-a
 gcloud compute ssh --zone $ZONE vm-a
     
-# Create a Compute Engine instances with ssh-keys
+# Create a Compute Engine instances with ssh-keys 
 source cm-env.sh
 gcloud compute instances create vm-b --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh \
     --metadata=ssh-keys=$USER:"$(cat ~/.ssh/id_rsa.pub)"
     
-# Create a Compute Engine instances adding SSH to vm a manually
+# Create a Compute Engine instances adding SSH to vm a manually 
+# It works, but you need to go to the console to add the SSH manually
 source cm-env.sh
 gcloud compute instances create vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
 # Add this to ssh-key manually on console
 echo $(cat ~/.ssh/id_rsa.pub)
 
-# Create a Compute Engine instances with update metadata
+# Create a Compute Engine instances with update metadata 
+# It works.
 source cm-env.sh
 gcloud compute instances create vm-d --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh 
@@ -57,12 +60,14 @@ gcloud compute instances add-metadata vm-d --metadata=ssh-keys=$USER:"$(cat ~/.s
 # Add ip adresses to inventory
 VM_A_IP=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 VM_B_IP=$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
-VM_C_IP=$(gcloud compute instances list --filter="name=vm-C" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+VM_C_IP=$(gcloud compute instances list --filter="name=vm-c" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+VM_D_IP=$(gcloud compute instances list --filter="name=vm-d" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 cat > inventory.txt <<EOF
 [vms]
-$VM_A_IP
-$VM_B_IP
-$VM_C_IP
+# $VM_A_IP
+# $VM_B_IP
+# $VM_C_IP
+$VM_D_IP
 EOF
 
 # Test using ping
