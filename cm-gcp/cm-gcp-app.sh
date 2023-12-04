@@ -1,7 +1,8 @@
-########### Copy SQL Data to Bucket
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
-export BUCKET_NAME="$APP_NAME-startup-script"
+# Configuration Management for the App
+
+# Environment Variables
+source cm-env.sh
+
 cat > data-bucket.yaml << EOF
 ---
 - hosts: vms
@@ -13,20 +14,18 @@ cat > data-bucket.yaml << EOF
       file:
         name: file.txt
         state: touch
-    - name: copy data to cloud storage
+    - name: test
       command: gcloud storage cp file.txt gs://$BUCKET_NAME
 EOF
 
+# Create a ssh key if not yet created
+ssh-keygen
+echo $(cat ~/.ssh/id_rsa.pub)
+
 # Add metadata ssh-keys to the app
-source cm-env.sh
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
 gcloud compute instances add-metadata $APP_NAME-db --metadata=ssh-keys=$USER:"$(cat ~/.ssh/id_rsa.pub)" --zone=$ZONE
 
 # Add ip adressess to inventory
-source cm-env.sh
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
 APP_DB_IP=$(gcloud compute instances list --filter="name=$APP_NAME-db" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 cat > app-inventory.txt << EOF
 [vms]
@@ -34,13 +33,6 @@ $APP_DB_IP
 EOF
 
 # Open SSH
-export USERNAME="" # This VM Name
-source cm-env.sh
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
-export FIREWALL_RULES_NAME="$APP_NAME-ports"
-export VPC_NAME="$APP_NAME-vpc"
-export TAGS="db"
 SOURCE_IP=$(gcloud compute instances list --filter="name="$USERNAME"" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-ssh \
     --direction=INGRESS --priority=1000 --network=$VPC_NAME --action=ALLOW --rules=tcp:22 --source-ranges=$SOURCE_IP/32 \
@@ -50,29 +42,24 @@ gcloud compute --project=$(gcloud config get project) firewall-rules create $FIR
 ansible all -m ping -i app-inventory.txt -u $USER
 
 # Add IAM Policy binding
-source cm-env.sh
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
-export STARTUP_SCRIPT_BUCKET_SA="$APP_NAME-bucket-sa"
-gcloud compute instances ad-iam-policy-binding $APP_NAME-db --zone $ZONE \
+gcloud projects add-iam-policy-binding $(gcloud config get project) \
     --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
-    --role=roles/storage.objectUser
+    --role=roles/storage.objectAdmin
 
 # with playbook
 ansible-playbook data-bucket.yaml -i app-inventory.txt -u $USER
 
 # SSH
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
 ssh $USER@$(gcloud compute instances list --filter="name=$APP_NAME-db" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 # or
-source cm-env.sh
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
 gcloud compute ssh $APP_NAME-db --zone $ZONE
 
-##### Cleanup
-export VERSION="i"
-export APP_NAME="ci-cd-oss-gcp-$VERSION"
-export FIREWALL_RULES_NAME="$APP_NAME-ports"
+
+
+#-------------------------Cleanup---------------------------------------#
 gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-ssh --quiet
+
+# Remove IAM Policy binding
+gcloud projects remove-iam-policy-binding $(gcloud config get project) \
+    --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
+    --role=roles/storage.objectAdmin
