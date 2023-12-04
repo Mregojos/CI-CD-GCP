@@ -1,4 +1,7 @@
 ########### Copy SQL Data to Bucket
+export VERSION="i"
+export APP_NAME="ci-cd-oss-gcp-$VERSION"
+export BUCKET_NAME="$APP_NAME-startup-script"
 cat > data-bucket.yaml << EOF
 ---
 - hosts: vms
@@ -6,6 +9,12 @@ cat > data-bucket.yaml << EOF
   tasks:
     - name: gcloud version
       command: gcloud version
+    - name: create a file
+      file:
+        name: file.txt
+        state: touch
+    - name: copy data to cloud storage
+      command: gcloud storage cp file.txt gs://$BUCKET_NAME
 EOF
 
 # Add metadata ssh-keys to the app
@@ -40,8 +49,27 @@ gcloud compute --project=$(gcloud config get project) firewall-rules create $FIR
 # Test using ping
 ansible all -m ping -i app-inventory.txt -u $USER
 
+# Add IAM Policy binding
+source cm-env.sh
+export VERSION="i"
+export APP_NAME="ci-cd-oss-gcp-$VERSION"
+export STARTUP_SCRIPT_BUCKET_SA="$APP_NAME-bucket-sa"
+gcloud compute instances ad-iam-policy-binding $APP_NAME-db --zone $ZONE \
+    --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
+    --role=roles/storage.objectUser
+
+# with playbook
 ansible-playbook data-bucket.yaml -i app-inventory.txt -u $USER
 
+# SSH
+export VERSION="i"
+export APP_NAME="ci-cd-oss-gcp-$VERSION"
+ssh $USER@$(gcloud compute instances list --filter="name=$APP_NAME-db" --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+# or
+source cm-env.sh
+export VERSION="i"
+export APP_NAME="ci-cd-oss-gcp-$VERSION"
+gcloud compute ssh $APP_NAME-db --zone $ZONE
 
 ##### Cleanup
 export VERSION="i"
