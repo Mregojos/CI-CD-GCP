@@ -1,5 +1,8 @@
 # Configuration Management on GCP
 
+# Environment Variables
+source cm-env.sh
+
 # Configuration Management
 sudo apt update 
 sudo apt install ansible -y
@@ -16,19 +19,29 @@ ansible-playbook playbooks-localhost/localhost.yaml
 ssh-keygen
 cat ~/.ssh/id_rsa.pub
 
-# Create two Compute Engine instances
-gcloud compute instances create vm-a vm-b --zone=$ZONE \
+# Create a startup script
+cat > startup-script.sh << EOF
+sudo apt update 
+sudo apt install python3-pip -y
+sudo apt install ansible -y
+# TO DO: Create a user
+# Public key
+touch ~/.ssh/authorized_keys
+echo "$(cat ~/.ssh/id_rsa.pub)" >>  ~/.ssh/authorized_keys
+EOF
+
+# Create a Compute Engine instances
+gcloud compute instances create vm-a --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh
 
-gcloud compute ssh --zone $ZONE vm-a
+# Use gcloud ssh to connect
+# gcloud compute ssh --zone $ZONE vm-a
 
 # Add ip adresses to inventory
 vm_a_ip=$(gcloud compute instances list --filter="name=vm-a" --format="value(networkInterfaces[0].accessConfigs[0].natIP)") 
-vm_b_ip=$(gcloud compute instances list --filter="name=vm-b" --format="value(networkInterfaces[0].accessConfigs[0].natIP)" )
 cat > inventory.txt <<EOF
-[servers]
+[vms]
 $vm_a_ip
-$vm_b_ip
 EOF
 
 # Copy the key to other machines
