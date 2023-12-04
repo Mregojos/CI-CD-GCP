@@ -16,7 +16,7 @@ cat > data-bucket.yaml << EOF
         state: touch
     - name: test (get)
       command: gcloud storage cp gs://$BUCKET_NAME/startup-script.sh .
-    - name: test (write)
+    - name: test (write/create)
       command: gcloud storage cp file.txt gs://$BUCKET_NAME/
 EOF
 
@@ -43,7 +43,7 @@ gcloud compute --project=$(gcloud config get project) firewall-rules create $FIR
 # Test using ping
 ansible all -m ping -i app-inventory.txt -u $USER
 
-# Add IAM Policy binding
+# Add IAM Policy binding (STORAGE ADMIN)
 gcloud projects add-iam-policy-binding $(gcloud config get project) \
     --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
     --role=roles/storage.admin
@@ -64,4 +64,7 @@ gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-ssh --quiet
 # Remove IAM Policy binding
 gcloud projects remove-iam-policy-binding $(gcloud config get project) \
     --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
-    --role=roles/storage.objectAdmin
+    --role=roles/storage.admin
+    
+    
+    
