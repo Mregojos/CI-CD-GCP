@@ -12,6 +12,7 @@ pipeline {
                 git clone https://github.com/mregojos/ci-cd-gcp
                 cd ci-cd-gcp/ci-cd-oss-gcp/app
                 pwd
+                ls
                 """
 
             }

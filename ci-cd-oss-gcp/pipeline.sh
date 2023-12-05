@@ -13,6 +13,7 @@ pipeline {
                 git clone https://github.com/mregojos/ci-cd-gcp
                 cd ci-cd-gcp/ci-cd-oss-gcp/app
                 pwd
+                ls
                 """
 
             }
@@ -47,7 +48,6 @@ DB_HOST=$(gcloud compute instances list --filter="name=$DB_INSTANCE_NAME" --form
 
 cat > app/env.yaml << EOF
 # Environment Variables for the app
-echo """
 DB_NAME:
     '$DB_NAME'
 DB_USER:
