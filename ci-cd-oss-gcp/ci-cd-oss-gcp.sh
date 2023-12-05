@@ -1,3 +1,9 @@
+# ci-cd-oss-gcp directory
+
+# Build Infra
+source environment-variables.sh
+sh infrastructure-automation-gcp.sh
+
 # Jenkins
 sh os.sh
 
@@ -5,7 +11,7 @@ sh os.sh
 gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-oss \
     --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:8000,tcp:50000 --source-ranges=0.0.0.0/0
 
-# Get the password
+# Get the password and go to <VM IP Address>:8000
 sudo docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
 # Exec container
@@ -13,11 +19,14 @@ sudo docker exec -it jenkins-blueocean sh
 
 # Create a pipelie and env variables
 sh pipeline.sh
-# Push to repository
+# Push to repository 
+# ci-cd-gcp directory
 sh g*
 # Go to UI and create a pipeline
 
 # Don't forget to cleanup
+source environment-variables.sh
+sh cleanup.sh
 rm -rf pipeline.txt
 rm -rf app/env.yaml
 

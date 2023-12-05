@@ -69,5 +69,7 @@ gcloud compute networks delete $VPC_NAME --quiet
 
 # CI/CD CLeanup
 gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-oss --quiet
+rm -rf pipeline.txt
+rm -rf app/env.yaml
 
 echo "\n #----------Done.----------# \n"
