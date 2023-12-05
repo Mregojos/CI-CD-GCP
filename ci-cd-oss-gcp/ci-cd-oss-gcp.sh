@@ -10,10 +10,19 @@ sudo docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPas
 
 # Exec container
 sudo docker exec -it jenkins-blueocean sh
-cd /var/jenkins_home/workspace/pipeline
-rm -rf ci*
 
-# Simple pipeline
+# Create a pipelie and env variables
+sh pipeline.sh
+# Push to repository
+sh g*
+# Go to UI and create a pipeline
+
+# Don't forget to cleanup
+rm -rf pipeline.txt
+rm -rf app/env.yaml
+
+
+#---------------------------- Simple pipeline for testing
 pipeline {
     agent any
     stages {
@@ -46,42 +55,5 @@ pipeline {
     }
 }
 
-# Clone the repo, build, deploy
-pipeline {
-    agent any
-    environment {
-        PROJECT=""
-    }
-    stages {
-        stage ('Clone the repo') {
-            steps {
-                echo "Clone the repo"
-                sh """
-                echo "${env.PROJECT}"
-                git clone https://github.com/mregojos/ci-cd-gcp
-                cd ci-cd-gcp/ci-cd-oss-gcp/app
-                pwd
-                """
 
-            }
-        }    
-        stage ('Build') {
-            steps {
-                sh """
-                cd ci-cd-gcp/ci-cd-oss-gcp/app
-                gcloud builds submit --region=us-west2 --tag us-west1-docker.pkg.dev/mattsreproject/ci-cd-oss-gcp-i-artifact-registry/ci-cd-oss-gcp-i:latest
-                """
-            }
-        }
-        stage ('Deploy') {
-            steps {
-                sh """
-                cd ci-cd-gcp/ci-cd-oss-gcp/app
-                gcloud run deploy ci-cd-oss-gcp-i  --max-instances=1 --min-instances=1 --port=9000  --env-vars-file=env.yaml     \
-                --image=us-west1-docker.pkg.dev/mattsreproject/ci-cd-oss-gcp-i-artifact-registry/ci-cd-oss-gcp-i:latest     --allow-unauthenticated     \
-                --region=us-west1     --service-account=ci-cd-oss-gcp-i-app-sa@mattsreproject.iam.gserviceaccount.com 
-                """
-            }
-        }
-    }
-}
+
