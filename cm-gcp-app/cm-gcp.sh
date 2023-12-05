@@ -26,7 +26,6 @@ sudo apt install python3-pip -y
 sudo apt install ansible -y
 EOF
 
-source cm-env.sh
 # Create three Compute Engine instances with ssh-keys 
 gcloud compute instances create vm-a vm-b vm-c --zone=$ZONE \
     --metadata-from-file=startup-script=startup-script.sh \

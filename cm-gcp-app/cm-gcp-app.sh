@@ -16,6 +16,8 @@ cat > data-bucket.yaml << EOF
         state: touch
     - name: test (get)
       command: gcloud storage cp gs://$BUCKET_NAME/startup-script.sh .
+    - name: list objects
+      command: gcloud storage ls
     - name: test (write/create)
       command: gcloud storage cp file.txt gs://$BUCKET_NAME/
 EOF
@@ -43,10 +45,23 @@ gcloud compute --project=$(gcloud config get project) firewall-rules create $FIR
 # Test using ping
 ansible all -m ping -i app-inventory.txt -u $USER
 
+#---------------------------------------------------------
+# Option A
 # Add IAM Policy binding (STORAGE ADMIN)
 gcloud projects add-iam-policy-binding $(gcloud config get project) \
     --member=serviceAccount:$STARTUP_SCRIPT_BUCKET_SA@$(gcloud config get project).iam.gserviceaccount.com \
     --role=roles/storage.admin
+
+# Option B
+# Update role
+# gcloud iam roles describe roles/storage.objectUser
+gcloud iam roles update $STARTUP_SCRIPT_BUCKET_CUSTOM_ROLE \
+    --project=$(gcloud config get project) \
+    --permissions=storage.objects.get,storage.objects.create,storage.objects.update,storage.objects.list,storage.buckets.get,storage.buckets.create,storage.buckets.update,\
+storage.buckets.list
+    
+# gcloud iam roles describe $STARTUP_SCRIPT_BUCKET_CUSTOM_ROLE --project=$(gcloud config get project) 
+
 
 # with playbook
 ansible-playbook data-bucket.yaml -i app-inventory.txt -u $USER
