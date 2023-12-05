@@ -18,11 +18,12 @@ sudo docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPas
 sudo docker exec -it jenkins-blueocean sh
 
 # Create a pipelie and env variables
+# Note: use env.yaml not .env.yaml
 sh pipeline.sh
 # Push to repository 
 # ci-cd-gcp directory
 sh g*
-# Go to UI and create a pipeline
+# Go to UI and create a pipeline using pipeline.txt
 
 # Don't forget to cleanup
 source environment-variables.sh
