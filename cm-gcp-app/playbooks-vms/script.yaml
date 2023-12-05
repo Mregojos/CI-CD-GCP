@@ -1,0 +1,7 @@
+---
+- hosts: vms
+  name: Using script module
+  become: true
+  tasks:
+    - name: Using script
+      script: script.sh  
