@@ -60,7 +60,7 @@ def sections(con, cur):
     #----------About Section----------#
     title = "### :cloud: Matt Cloud Tech"
     about = "##### Good day :wave:.\n##### My name is :blue[Matt]. I am a Cloud Technology Enthusiast. :technologist: \n##### Currently, I am learning and building Cloud Infrastructure, Data and CI/CD Pipelines, and Intelligent Systems."
-    notification = f"###### :computer: :technologist: [:violet[Intelligent Agent] is here. Try it now. :link:](https://{DOMAIN_NAME}/Agent)"
+    notification = f"###### :computer: :technologist: Chat with [:violet[Multimodal Agent] :link:](https://{DOMAIN_NAME}/Agent)"
     
     cur.execute("""
                 SELECT *
@@ -226,7 +226,7 @@ def sections(con, cur):
     #----------External links---------#
     with st.expander(' :link: External Links'):
         st.write(f":link: :computer: [Personal Website](https://{DOMAIN_NAME})")
-        st.write(f":link: :computer: [Intelligent Agent Website](https://{DOMAIN_NAME}/Agent)")
+        st.write(f":link: :computer: [Multimodal Agent Website](https://{DOMAIN_NAME}/Agent)")
         st.write(":link: :book: [Project Repository](https://github.com/mregojos)")
         # st.write(":link: :notebook: [Blog](https://)")
         # st.write(":link: :hand: [Connect with me](https://)")
@@ -236,9 +236,11 @@ def sections(con, cur):
         Admin = st.checkbox("MATT CLOUD TECH")
         if Admin:
             password = st.text_input("Password", type="password")
-            if password == ADMIN_PASSWORD:
+            login = st.toggle("Login")
+            if password == ADMIN_PASSWORD and login:
                 st.info("Login Success")
-                option = st.text_input("About, Portfolio, Messages, Counter")
+                option = st.text_input("About, Portfolio, Messages, Counter, Data")
+                
                 if option == "About":
                     title= st.text_input("Title", title)
                     about = st.text_area("About", about)
@@ -251,6 +253,7 @@ def sections(con, cur):
                         con.commit()
                         st.info("Successfully Added.")
                         st.button(":blue[Done]") 
+                        
                 elif option == "Portfolio":
                     option_portfolio = st.text_input("Portfolio or Manual")
                     if option_portfolio == "Portfolio":
@@ -290,6 +293,7 @@ def sections(con, cur):
                                 con.commit()
                                 st.success("Successfully Deleted.")
                                 st.button(":blue[Done]") 
+                                
                 elif option == "Messages":
                     st.info("Login success")
                     cur.execute("""
@@ -307,6 +311,7 @@ def sections(con, cur):
                             st.info("Successfully Deleted.")
                             st.button(":blue[Done]")
                         st.divider()
+                    
                 elif option == "Counter":
                     # Previous views
                     views = st.checkbox("See Previous Views")
@@ -319,6 +324,34 @@ def sections(con, cur):
                                     """)
                         for _, _, time in cur.fetchall():
                             st.caption(f"{time}")
+                        
+                elif option == "Data":
+                    prune_data = st.button(f"Prune (Messages, Notes, Counter)")
+                    if prune_data:
+                        cur.execute("DROP TABLE messages")
+                        cur.execute("DROP TABLE notes")
+                        cur.execute("DROP TABLE counter")
+                        st.info("Messages, Notes, and Counter were successfully deleted.")
+                        con.commit()
+                    
+                    prune_all_messages = st.button(f"Prune Messages")
+                    if prune_all_messages:
+                        cur.execute("DROP TABLE messages")
+                        st.info("Messages were successfully deleted.")
+                        con.commit()
+                        
+                    prune_all_notes = st.button(f"Prune All Notes")
+                    if prune_all_notes:
+                        cur.execute("DROP TABLE notes")
+                        st.info("Notes were successfully deleted.")
+                        con.commit()
+                        
+                    prune_all_counter = st.button(f"Prune All Counter")
+                    if prune_all_counter:
+                        cur.execute("DROP TABLE counter")
+                        st.info("Views were successfully deleted.")
+                        con.commit()
+                    
    
     #----------End of External links---------#
 
