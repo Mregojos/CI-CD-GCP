@@ -1,9 +1,9 @@
 # Model Deployment Repo
 # cp -rf app-deployment/* ~/ci-cd-gcp/app
-cp -rf app-deployment/Main.py ~/ci-cd-gcp/app
-cp -rf app-deployment/pages/Agent.py ~/ci-cd-gcp/app/pages
-cp -rf test/* ~/ci-cd-gcp/test
-cp -rf makefile ~/ci-cd-gcp/makefile
+cp -rf app-deployment/Main.py ~/CI-CD-GCP/app
+cp -rf app-deployment/pages/Agent.py ~/CI-CD-GCP/app/pages
+cp -rf test/* ~/CI-CD-GCP/test
+cp -rf makefile ~/CI-CD-GCP/makefile
 
 # ci-cd-gcp oss
 cp -rf app ci-cd-oss-gcp
